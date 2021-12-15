@@ -1,0 +1,15 @@
+# IntelliJ
+.idea
+*.iml
+*.ipr
+*.iws
+out
+
+# Scala
+target
+.bsp
+*.class
+*.log
+
+# MacOS
+.DS_Store
