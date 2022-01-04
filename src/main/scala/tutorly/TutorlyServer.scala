@@ -1,6 +1,6 @@
 package tutorly
 
-import tutorly.TutorlyDB.PersonDbEnv
+import tutorly.TutorlyDB.TutorlyDBEnv
 import zhttp.service.server.ServerChannelFactory
 import zhttp.service.{EventLoopGroup, Server}
 import zio._
@@ -13,7 +13,7 @@ object TutorlyServer extends App {
   // Set a port
   private val PORT = 8090
 
-  val personBackendLayer: ZLayer[zio.ZEnv, Nothing, PersonDbEnv] =
+  val tutorlyBackendLayer: ZLayer[zio.ZEnv, Nothing, TutorlyDBEnv] =
     TutorlyDB.live
 
   import zhttp.http._
@@ -43,7 +43,7 @@ object TutorlyServer extends App {
     // horizontally compose dependencies
     val env = ServerChannelFactory.auto ++
       EventLoopGroup.auto(nThreads) ++
-      personBackendLayer
+      tutorlyBackendLayer
 
     // Create a new server
     server.make

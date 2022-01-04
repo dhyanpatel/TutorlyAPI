@@ -23,12 +23,13 @@ object TutorlyDB {
   val persons: Quoted[EntityQuery[Person]] = quote {
     querySchema[Person]("Person")
   }
-  //  implicit val personInsertMeta = insertMeta[Person](_.id)
 
   // type alias to use for other layers
-  type PersonDbEnv = Has[TutorlyDB.Service]
+  type TutorlyDBEnv = Has[TutorlyDB.Service]
 
-  // service definition
+  /**
+   * Service Definition
+   */
   trait Service {
     def insert(person: Person): Task[Long]
 
@@ -37,8 +38,10 @@ object TutorlyDB {
     def byName(name: String): Task[List[Person]]
   }
 
-  // layer - service implementation
-  val live: ZLayer[ZEnv, Nothing, PersonDbEnv] = ZLayer.succeed {
+  /**
+   * Service Implementation
+   */
+  val live: ZLayer[ZEnv, Nothing, TutorlyDBEnv] = ZLayer.succeed {
     new Service {
       override def insert(person: Person): Task[Long] = {
         val insertQuery = quote {
@@ -65,13 +68,13 @@ object TutorlyDB {
   }
 
   // accessor
-  def insert(person: Person): ZIO[PersonDbEnv, Throwable, Long] =
+  def insert(person: Person): ZIO[TutorlyDBEnv, Throwable, Long] =
     ZIO.accessM(_.get.insert(person))
 
-  def getAll: ZIO[PersonDbEnv, Throwable, List[Person]] =
+  def getAll: ZIO[TutorlyDBEnv, Throwable, List[Person]] =
     ZIO.accessM(_.get.getAll)
 
-  def byName(name: String): ZIO[PersonDbEnv, Throwable, List[Person]] =
+  def byName(name: String): ZIO[TutorlyDBEnv, Throwable, List[Person]] =
     ZIO.accessM(_.get.byName(name))
 
 }

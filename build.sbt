@@ -27,7 +27,8 @@ lazy val root = (project in file("."))
       "io.d11" %% "zhttp-test" % zhttpVersion % Test,
       "org.postgresql" % "postgresql" % "42.3.1",
       "com.typesafe" % "config" % "1.4.1",
-      "io.getquill" %% "quill-jdbc-zio" % "3.12.0"
+      "io.getquill" %% "quill-jdbc-zio" % "3.12.0",
+      "com.github.t3hnar" %% "scala-bcrypt" % "4.3.0"
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
     mainClass := Some("tutorly.TutorlyServer")
