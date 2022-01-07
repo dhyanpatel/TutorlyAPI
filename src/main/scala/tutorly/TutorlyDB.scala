@@ -2,9 +2,8 @@ package tutorly
 
 import io.getquill.context.ZioJdbc._
 import io.getquill.util.LoadConfig
-import io.getquill.{EntityQuery, JdbcContextConfig, Literal, PostgresZioJdbcContext, Quoted}
+import io.getquill._
 import zio._
-
 import javax.sql.DataSource
 
 case class Person(id: Int, name: String, age: Int)
